@@ -1,14 +1,14 @@
-const Button = (type) => {  
-    // let class = "";
-    // if(type === "feedback") {
-    //     class = "feedback-button";
-    //     text = "Give Feedback";
-    // }
-    return (
-        <button type="button" className="">
-           Give Feedback
-        </button>
-    )
+import "./Button.css";
+
+const Button = ({type}) => {  
+    if(type === "feedback") {
+        return (
+            <button type="button" className="button feedback-button">
+               Give Feedback
+            </button>
+        )
+    }
+    
 }
 
 export default Button;
