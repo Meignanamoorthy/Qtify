@@ -11,3 +11,8 @@
     border: 1px solid #121212;
     border-radius: 8px;
 }
+.collapse-button {
+    color: #34C94B;
+    background: none;
+    border: none;
+}
