@@ -1,20 +1,13 @@
 import "./Button.css";
 
-const Button = ({type}) => {  
+const Button = ({type, handleClick}) => {  
     if(type === "feedback") {
         return (
             <button type="button" className="button feedback-button">
                Give Feedback
             </button>
         )
-    } else if(type === "collapse") {
-        return (
-            <button type="button" className="button collapse-button">
-                Collapse
-            </button>
-        )
-
-    }
+    } 
     
 }
 

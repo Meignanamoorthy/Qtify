@@ -13,6 +13,7 @@ import axios from "axios";
 import "./MainComponent.css";
 import { config } from "../App";
 import Section from "./Section";
+import Carousel from "./../utils/Carousel";
 
 const MainComponent = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -20,6 +21,8 @@ const MainComponent = () => {
   const [topAlbums, setTopAlbums] = useState([]);
   const [newAlbums, setNewAlbums] = useState([]);
   const [albumApiCalled, setAlbumApiCalled] = useState(false);
+  const [carouselTopAlbumView, setCarouselTopAlbumView] = useState(true);
+  const [carouselNewAlbumView, setCarouselNewAlbumView] = useState(true);
 
   useEffect(() => {
     loadTopAlbums();
@@ -28,6 +31,16 @@ const MainComponent = () => {
   useEffect(() => {
     loadNewAlbums();
   }, [topAlbums]);
+
+  const toggleView = (toggleView, sectionName) => {
+    if (sectionName === 'top') {
+      setCarouselTopAlbumView(!carouselTopAlbumView);
+    }
+    
+    if (sectionName === 'new') {
+      setCarouselNewAlbumView(!carouselNewAlbumView);
+    }
+  }
 
   const loadTopAlbums = async() => {
     setAlbumApiCalled(true);
@@ -99,8 +112,24 @@ const MainComponent = () => {
             :
               (
                 <Box>
-                  <Section albums={topAlbums} heading="Top Albums" />
-                  <Section albums={newAlbums} heading="New Albums" />
+                  {
+                    !carouselTopAlbumView ? (
+                      <Section heading="Top Albums" albums={topAlbums} handleToggle={() => toggleView('carousel', 'top')}  />
+                    ) 
+                    :
+                    (
+                      <Carousel heading="Top Albums" albums={topAlbums} handleToggle={() => toggleView('section', 'top')} />
+                    )
+                  }
+                  {
+                    !carouselNewAlbumView ? (
+                      <Section heading="New Albums" albums={newAlbums} handleToggle={() => toggleView('carousel', 'new')} />
+                    )
+                    :
+                    (
+                      <Carousel heading="New Albums" albums={newAlbums} handleToggle={() => toggleView('section', 'new')} />
+                    )
+                  }
                 </Box>
               )
             }

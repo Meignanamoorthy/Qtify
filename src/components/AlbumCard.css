@@ -3,6 +3,7 @@
     width: 75%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 3vh;
 }
 .card {
     border-radius: 12px !important;

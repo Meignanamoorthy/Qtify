@@ -4,21 +4,15 @@
 }
 
 .hero {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
-    padding: 3rem 15rem;
+    padding: 1.5rem 15rem;
 }
 
 .hero-content {
-    /* display: flex;
-    align-items: flex-start; */
-    padding: 13vh 0 0 5rem;
+    padding: 10vh 0 0 5rem;
 }
 
 .hero-image {
     background-image: url("../assets/vibrating-headphone.png");
-    /* background-position: center; */
     background-repeat: no-repeat;
     background-size: contain;
     height: 18rem;
