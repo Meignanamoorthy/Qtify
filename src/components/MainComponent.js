@@ -18,13 +18,18 @@ const MainComponent = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [count, setCount] = useState(0);
   const [topAlbums, setTopAlbums] = useState([]);
+  const [newAlbums, setNewAlbums] = useState([]);
   const [albumApiCalled, setAlbumApiCalled] = useState(false);
 
   useEffect(() => {
-    loadAlbums();
+    loadTopAlbums();
   }, []);
 
-  const loadAlbums = async() => {
+  useEffect(() => {
+    loadNewAlbums();
+  }, [topAlbums]);
+
+  const loadTopAlbums = async() => {
     setAlbumApiCalled(true);
     let apiCall = await axios.get(config.endpoint+"/albums/top")
     .catch((error) => {
@@ -39,6 +44,24 @@ const MainComponent = () => {
       setAlbumApiCalled(false);
       if (response !== undefined) {
         setTopAlbums(response.data);
+      } else {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      }
+    });
+  }
+
+  const loadNewAlbums = async() => {
+    let apiCall = await axios.get(config.endpoint+"/albums/top")
+    .catch((error) => {
+      if(error.response === undefined) {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        enqueueSnackbar(error.response.data.message, {variant: 'error'});
+      }
+    })
+    .then(response => {
+      if (response !== undefined) {
+        setNewAlbums(response.data);
       } else {
         enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
       }
@@ -75,7 +98,10 @@ const MainComponent = () => {
               </Box>)
             :
               (
-                <Section albums={topAlbums} heading="Top Albums" />
+                <Box>
+                  <Section albums={topAlbums} heading="Top Albums" />
+                  <Section albums={newAlbums} heading="New Albums" />
+                </Box>
               )
             }
           </Grid>

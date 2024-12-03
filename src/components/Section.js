@@ -9,7 +9,7 @@ import Button from "./../utils/Button"
 
 const Section = ({albums, heading}) => {
     return (
-        <Box padding="1rem" sx={{ mx: 1 }} md={{ mx: 3 }}>
+        <Box padding="1rem" sx={{ mx: 1 }} md={{ mx: 3, my: 3 }}>
             <Stack direction="row" sx={{ justifyContent: "space-between" }}>
                 <Typography style={{color:"#fff"}} variant="h6" gutterBottom>{heading}</Typography>
                 <Button type="collapse">Collapse</Button>
