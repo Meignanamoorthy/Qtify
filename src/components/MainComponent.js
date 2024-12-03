@@ -51,7 +51,7 @@ const MainComponent = () => {
   }
 
   const loadNewAlbums = async() => {
-    let apiCall = await axios.get(config.endpoint+"/albums/top")
+    let apiCall = await axios.get(config.endpoint+"/albums/new")
     .catch((error) => {
       if(error.response === undefined) {
         enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
