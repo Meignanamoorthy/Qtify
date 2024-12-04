@@ -8,13 +8,13 @@ import {
 import React from "react";
 import "./AlbumCard.css";
 
-const AlbumCard = ({album}) => {
+const AlbumCard = ({album, type}) => {
     return (
         <div key={album.id} className="card-container">
             <Card className="card" sx={{ mt:2 }}>
                 <CardMedia className="card-img" component="img" alt={album.title} image={album.image} />
                 <CardContent className="card-content">
-                    <Chip label={`${album.follows} Follows`} variant="outlined" className="followers-count"/>
+                    <Chip label={`${type === 'albums' ? album.follows+' Follows' : album.likes+' Likes'}`} variant="outlined" className="followers-count"/>
                 </CardContent>
             </Card>
             <Typography variant="body2" style={{color:"#fff"}} sx={{ mt: 1 }}>{album.title}</Typography>

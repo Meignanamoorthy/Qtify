@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import AlbumCard from "./../components/AlbumCard";
 
-const Carousel = ({heading, albums}) => {
+const Carousel = ({heading, albums, type}) => {
     return (
         <Box sx={{ mx: 1 }} md={{ mx: 3, my: 3 }}>
             <Swiper 
@@ -19,7 +19,7 @@ const Carousel = ({heading, albums}) => {
                 {
                     albums.map((album) => (
                         <SwiperSlide key={album.id}>
-                            <AlbumCard album={album} />
+                            <AlbumCard album={album} type={type}/>
                         </SwiperSlide>
                     ))
                 }

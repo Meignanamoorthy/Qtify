@@ -21,6 +21,8 @@ const MainComponent = () => {
   const [topAlbums, setTopAlbums] = useState([]);
   const [newAlbums, setNewAlbums] = useState([]);
   const [albumApiCalled, setAlbumApiCalled] = useState(false);
+  const [genres, setGenres] = useState([]);
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     loadTopAlbums();
@@ -28,6 +30,8 @@ const MainComponent = () => {
 
   useEffect(() => {
     loadNewAlbums();
+    loadGenres();
+    loadSongs();
   }, [topAlbums]);
 
   const loadTopAlbums = async() => {
@@ -69,6 +73,42 @@ const MainComponent = () => {
     });
   }
 
+  const loadGenres = async() => {
+    let apiCall = await axios.get(config.endpoint+"/genres")
+    .catch((error) => {
+      if(error.response === undefined) {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        enqueueSnackbar(error.response.data.message, {variant: 'error'});
+      }
+    })
+    .then(response => {
+      if (response !== undefined) {
+        setGenres(response.data);
+      } else {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      }
+    });
+  }
+
+  const loadSongs = async() => {
+    let apiCall = await axios.get(config.endpoint+"/songs")
+    .catch((error) => {
+      if(error.response === undefined) {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      } else if (error.response.status >= 400 && error.response.status < 500) {
+        enqueueSnackbar(error.response.data.message, {variant: 'error'});
+      }
+    })
+    .then(response => {
+      if (response !== undefined) {
+        setSongs(response.data);
+      } else {
+        enqueueSnackbar('Something went wrong. Check that the backend is running, reachable and returns valid JSON.', {variant: 'error'});
+      }
+    });
+  }
+
   return (
     <div>
         <Header />
@@ -100,8 +140,9 @@ const MainComponent = () => {
             :
               (
                 <Box>
-                  <Section heading="Top Albums" albums={topAlbums} />
-                  <Section heading="New Albums" albums={newAlbums} />
+                  <Section heading="Top Albums" albums={topAlbums} type="albums" />
+                  <Section heading="New Albums" albums={newAlbums} type="albums"/>
+                  <Section heading="Songs" albums={songs} genres={genres} type="songs"/>
                 </Box>
               )
             }
